@@ -71,4 +71,3 @@ Si deseas contribuir a este proyecto, por favor sigue estos pasos:
 ## 💬 Contacto
 
 - **Autor**: [Bruno Alonso](https://github.com/bait-py)
-```
