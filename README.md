@@ -1,6 +1,6 @@
 # League of Legends Stats Tracker
 
-![Logo del Proyecto](https://ruta-de-la-imagen.com/logo.png)  
+![Logo del Proyecto](https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/4ff9dd0d-e3e1-4254-bad7-f267ef833659/dg8e2z0-8bac5296-ff59-48af-b500-8c46a8b6e0de.jpg/v1/fill/w_768,h_1024,q_75,strp/jesus_second_coming_on_a_white_horse__by_cjb1981_dg8e2z0-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTAyNCIsInBhdGgiOiJcL2ZcLzRmZjlkZDBkLWUzZTEtNDI1NC1iYWQ3LWYyNjdlZjgzMzY1OVwvZGc4ZTJ6MC04YmFjNTI5Ni1mZjU5LTQ4YWYtYjUwMC04YzQ2YThiNmUwZGUuanBnIiwid2lkdGgiOiI8PTc2OCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.bQEASaIHPqlehmuNRmOHQiEnY2qfFQbumZxIvR0ZAQE) 
 Bienvenido a **League of Legends Stats Tracker**, una herramienta web diseñada para mostrar y analizar las estadísticas de jugadores de **League of Legends** en tiempo real. ¡Ahora podrás ver tu rendimiento en cada partida, además de obtener estadísticas detalladas sobre tus partidas ganadas, perdidas, ranking y mucho más!
 
 ## 📸 Captura de Pantalla
