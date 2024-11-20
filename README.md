@@ -29,12 +29,12 @@ Este proyecto utiliza las siguientes tecnologías:
 
 1. Clona el repositorio:
     ```bash
-    git clone https://github.com/tu-usuario/league-of-legends-stats-tracker.git
+    git clone https://github.com/bait-py/nyoloqchallenge.git
     ```
 
 2. Navega hasta el directorio del proyecto:
     ```bash
-    cd league-of-legends-stats-tracker
+    cd nyoloqchallenge
     ```
 
 3. Abre `index.html` en tu navegador para ver el tracker en acción.
