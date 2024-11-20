@@ -1,0 +1,157 @@
+const apiKey = 'RGAPI-42b9edcc-0144-472a-a078-ec39b693a84b'; // Reemplaza con tu clave de API de Riot Games
+
+const jugadores = [
+    { nombre: 'Bruno', rol: 'JUNGLE', riotId: 'Smooth Criminal#009' },
+    { nombre: 'Alex', rol: 'TOP', riotId: 'Cayden7w7#EUW' },
+    { nombre: 'Jordi', rol: 'ADC', riotId: 'Smooth Criminal#009' },
+    { nombre: 'Aritz', rol: 'MID', riotId: 'Smooth Criminal#009' },
+    { nombre: 'Jua', rol: 'ADC', riotId: 'Smooth Criminal#009' },
+    { nombre: 'Diego', rol: 'SUP', riotId: 'ElXopen#2119' },
+    { nombre: 'Marc', rol: 'SUP', riotId: 'Thors Snoresson#3327' }
+];
+
+document.addEventListener('DOMContentLoaded', () => {
+    mostrarResultadosEnTabla(jugadores);
+});
+
+function buscarEstadisticas(jugador) {
+    // Separar el nombre y el tag del Riot ID
+    const [gameName, tagLine] = jugador.riotId.split('#');
+    
+    // Primero, obtener el PUUID usando el nuevo endpoint de account-v1
+    const accountUrl = `https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${encodeURIComponent(gameName)}/${encodeURIComponent(tagLine)}?api_key=${apiKey}`;
+
+    return fetch(accountUrl)
+        .then(response => response.json())
+        .then(accountData => {
+            // Usar el PUUID para obtener el ID del invocador
+            return fetch(`https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${accountData.puuid}?api_key=${apiKey}`)
+                .then(response => response.json())
+                .then(summonerData => {
+                    // Obtener las estadísticas de ranked usando el ID del invocador
+                    return fetch(`https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${summonerData.id}?api_key=${apiKey}`)
+                        .then(response => response.json())
+                        .then(statsData => ({ 
+                            jugador: {
+                                ...jugador,
+                                summonerName: summonerData.gameName // Usar el nuevo gameName
+                            }, 
+                            statsData 
+                        }));
+                });
+        })
+        .catch(error => {
+            console.error(`Error al buscar el invocador ${jugador.riotId}:`, error);
+            return null;
+        });
+}
+
+function mostrarResultadosEnTabla(jugadores) {
+    const tablaResultados = document.getElementById('tablaResultados');
+    tablaResultados.innerHTML = '';
+
+    Promise.all(jugadores.map(buscarEstadisticas))
+        .then(results => {
+            results.forEach(result => {
+                if (result) {
+                    const soloQueue = result.statsData.find(queue => queue.queueType === 'RANKED_SOLO_5x5');
+                    if (soloQueue) {
+                        const fila = document.createElement('tr');
+
+                        let colorTexto = '';
+                        if (soloQueue.tier === 'BRONZE') {
+                            colorTexto = '#CD7F32'; // Color bronce más realista
+                        } else if (soloQueue.tier === 'SILVER') {
+                            colorTexto = '#C0C0C0'; // Plata metálica
+                        } else if (soloQueue.tier === 'GOLD') {
+                            colorTexto = '#FFD700'; // Dorado brillante
+                        } else if (soloQueue.tier === 'IRON') {
+                            colorTexto = '#43464B'; // Gris hierro
+                        } else if (soloQueue.tier === 'PLATINUM') {
+                            colorTexto = '#40E0D0'; // Turquesa platino
+                        } else if (soloQueue.tier === 'DIAMOND') {
+                            colorTexto = '#B9F2FF'; // Azul diamante
+                        } else if (soloQueue.tier === 'EMERALD') {
+                            colorTexto = '#50C878'; // Verde esmeralda
+                        } else if (soloQueue.tier === 'MASTER') {
+                            colorTexto = '#9370DB'; // Púrpura maestro
+                        } else if (soloQueue.tier === 'GRANDMASTER') {
+                            colorTexto = '#FF4500'; // Rojo-naranja intenso
+                        } else if (soloQueue.tier === 'CHALLENGER') {
+                            colorTexto = '#FF69B4'; // Dorado challenger
+                        }
+
+                        const partidasGanadas = soloQueue.wins;
+                        const partidasPerdidas = soloQueue.losses;
+                        const partidasTotales = partidasGanadas + partidasPerdidas;
+                        const winrate = ((partidasGanadas / partidasTotales) * 100).toFixed(2);
+
+                        // Usar el nuevo formato de Riot ID para el enlace de op.gg
+                        const opggUrl = `https://www.op.gg/summoners/euw/${encodeURIComponent(result.jugador.riotId.replace('#', '-'))}`;
+
+                        fila.innerHTML = `
+                            <td>${result.jugador.nombre}</td>
+                            <td><img src="${getRoleImage(result.jugador.rol)}" alt="${result.jugador.rol}"></td>
+                            <td>${result.jugador.riotId}</td>
+                            <td style="color: ${colorTexto}" class="stats">${soloQueue.tier} ${soloQueue.rank}</td>
+                            <td>${soloQueue.leaguePoints}</td>
+                            <td class="stats">${partidasTotales}</td>
+                            <td class="stats partidas-ganadas">${partidasGanadas}</td>
+                            <td class="stats partidas-perdidas">${partidasPerdidas}</td>
+                            <td class="stats">${winrate}%</td>
+                            <td class="stats"><a href="${opggUrl}" target="_blank">OP.GG</a></td>
+                        `;
+                        tablaResultados.appendChild(fila);
+                    } else {
+                        console.error(`El jugador ${result.jugador.nombre} no está en cola clasificatoria solo/dúo.`);
+                    }
+                } else {
+                    console.error('No se pudieron obtener estadísticas para algunos jugadores.');
+                }
+            });
+        });
+}
+
+function getRoleImage(rol) {
+    const roleMap = {
+        JUNGLE: 'images/jgl.png',
+        ADC: 'images/adc.png',
+        TOP: 'images/top.png',
+        SUP: 'images/sup.png',
+        MID: 'images/mid.png',
+    };
+
+    return roleMap[rol] || 'images/default.png';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const thElements = document.querySelectorAll('th.sortable');
+    thElements.forEach(th => th.addEventListener('click', () => sortTable(th)));
+
+    function sortTable(clickedHeader) {
+        const table = clickedHeader.closest('table');
+        const thElements = table.querySelectorAll('th.sortable');
+        thElements.forEach(th => th.classList.remove('ascending', 'descending'));
+
+        const rows = Array.from(table.querySelector('tbody').querySelectorAll('tr'));
+        const colKey = clickedHeader.getAttribute('data-column');
+        const isAscending = !clickedHeader.classList.contains('descending');
+
+        rows.sort((a, b) => {
+            const aValue = a.querySelector(`[data-column="${colKey}"]`).textContent.trim();
+            const bValue = b.querySelector(`[data-column="${colKey}"]`).textContent.trim();
+
+            if (colKey === 'winrate') {
+                const aValueNumber = parseFloat(aValue.replace('%', ''));
+                const bValueNumber = parseFloat(bValue.replace('%', ''));
+                return isAscending ? aValueNumber - bValueNumber : bValueNumber - aValueNumber;
+            }
+
+            return isAscending ? aValue.localeCompare(bValue, undefined, { numeric: true, sensitivity: 'base' }) : bValue.localeCompare(aValue, undefined, { numeric: true, sensitivity: 'base' });
+        });
+
+        rows.forEach(row => table.querySelector('tbody').appendChild(row));
+        clickedHeader.classList.toggle('ascending', isAscending);
+        clickedHeader.classList.toggle('descending', !isAscending);
+    }
+});

@@ -1,0 +1,289 @@
+/* Variables globales */
+:root {
+    --primary-bg: #0f172a;
+    --secondary-bg: #1e293b;
+    --accent-color: #3b82f6;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --hover-bg: #334155;
+    --border-color: #2a3849;
+    --success-color: #22c55e;
+    --error-color: #ef4444;
+}
+
+/* Estilos base */
+body {
+    background-color: var(--primary-bg);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 2rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Contenedor del título */
+.title-container {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 1rem;
+}
+
+/* Título principal */
+h1 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    display: inline-block;
+}
+
+/* Efecto de gradiente animado para el texto */
+h1 a {
+    background: linear-gradient(
+        45deg,
+        #ff4d4d,
+        #f6c90e,
+        #3b82f6,
+        #9333ea
+    );
+    background-size: 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradient 8s linear infinite;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    display: inline-block;
+}
+
+/* Efecto de sombra con desenfoque */
+h1 a::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    background: linear-gradient(
+        45deg,
+        #ff4d4d,
+        #f6c90e,
+        #3b82f6,
+        #9333ea
+    );
+    background-size: 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradient 8s linear infinite;
+    filter: blur(25px) brightness(1.5);
+    opacity: 0.5;
+}
+
+/* Subtítulo */
+.subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    opacity: 0.8;
+}
+
+/* Animación del gradiente */
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+    
+    .subtitle {
+        font-size: 0.875rem;
+        letter-spacing: 2px;
+    }
+}
+
+/* Contenedor principal */
+#resultados {
+    width: 95%;
+    max-width: 1400px;
+    background-color: var(--secondary-bg);
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+                0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Tabla */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.875rem;
+}
+
+/* Encabezados */
+th {
+    background-color: var(--secondary-bg);
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 2px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+/* Columnas ordenables */
+th.sortable {
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+th.sortable:hover {
+    color: var(--accent-color);
+}
+
+/* Celdas */
+td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.2s ease;
+}
+
+/* Filas */
+tr {
+    transition: background-color 0.2s ease;
+}
+
+tr:hover {
+    background-color: var(--hover-bg);
+}
+
+/* Estadísticas */
+td.stats {
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+}
+
+/* Partidas ganadas/perdidas */
+td.stats.partidas-ganadas {
+    color: var(--success-color);
+}
+
+td.stats.partidas-perdidas {
+    color: var(--error-color);
+}
+
+/* Enlaces */
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+a:hover {
+    opacity: 0.8;
+}
+
+/* Imágenes de roles */
+td img {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    filter: brightness(0.9);
+    transition: filter 0.2s ease;
+}
+
+td img:hover {
+    filter: brightness(1.1);
+}
+
+/* Indicador de ordenamiento */
+th.ascending::after {
+    content: " ↑";
+    color: var(--accent-color);
+}
+
+th.descending::after {
+    content: " ↓";
+    color: var(--accent-color);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    body {
+        padding: 1rem;
+    }
+    
+    #resultados {
+        width: 100%;
+    }
+    
+    td, th {
+        padding: 0.75rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--primary-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--hover-bg);
+}
+
+/* Animación suave al cargar */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#resultados {
+    animation: fadeIn 0.3s ease-out;
+}

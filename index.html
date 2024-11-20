@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NyoloQ Challenge</title>
+    <link rel="stylesheet" type="text/css" href="css2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="title-container">
+        <h1>
+            <h1>NyoloQ Challenge</h1>
+            <div class="subtitle">Ranked Solo/Duo Statistics</div>
+        </h1>
+    </div>
+    
+    <div id="resultados">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Nombre del Jugador</th>
+                    <th>Rol</th>
+                    <th>Cuenta</th>
+                    <th>Elo</th>
+                    <th>LPs</th>
+                    <th data-column="partidas" class="sortable">Partidas <i class="fas fa-sort"></i></th>
+                    <th data-column="ganadas" class="sortable">Ganadas <i class="fas fa-sort"></i></th>
+                    <th data-column="perdidas" class="sortable">Perdidas <i class="fas fa-sort"></i></th>
+                    <th data-column="winrate" class="sortable">Winrate <i class="fas fa-sort"></i></th>
+                    <th>Stats</th>
+                </tr>
+            </thead>
+            <tbody id="tablaResultados">
+                <!-- Aquí se agregarán las filas de resultados -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="./script"></script>
+</body>
+</html>
