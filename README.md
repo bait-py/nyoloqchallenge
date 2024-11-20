@@ -1,6 +1,7 @@
 # League of Legends Stats Tracker
 
 ![Logo del Proyecto](https://upload.wikimedia.org/wikipedia/commons/d/d8/League_of_Legends_2019_vector.svg)
+
 Bienvenido a **League of Legends Stats Tracker**, una herramienta web diseñada para mostrar y analizar las estadísticas de jugadores de **League of Legends** en tiempo real. ¡Ahora podrás ver tu rendimiento en cada partida, además de obtener estadísticas detalladas sobre tus partidas ganadas, perdidas, ranking y mucho más!
 
 ## 📸 Captura de Pantalla
