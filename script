@@ -1,4 +1,4 @@
-const apiKey = 'RGAPI-42b9edcc-0144-472a-a078-ec39b693a84b'; // Reemplaza con tu clave de API de Riot Games
+const apiKey = ''; // Reemplaza con tu clave de API de Riot Games
 
 const jugadores = [
     { nombre: 'Bruno', rol: 'JUNGLE', riotId: 'Smooth Criminal#009' },
@@ -154,4 +154,5 @@ document.addEventListener('DOMContentLoaded', () => {
         clickedHeader.classList.toggle('ascending', isAscending);
         clickedHeader.classList.toggle('descending', !isAscending);
     }
+
 });
